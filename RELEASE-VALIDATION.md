@@ -4,7 +4,7 @@
 
 - APPID：`1121555`
 - 版本：`2.1.0`（code `6`）
-- 目标：3 个 Balance + 3 个 GTR4 / GTR4 LE + 3 个 T-Rex 3，均为圆屏
+- 目标：3 个 Balance + 2 个 Cheetah Pro + 8 个 Active 2（圆形版）+ 3 个 GTR4 / GTR4 LE + 3 个 T-Rex 3，共 19 个圆屏目标
 - 本地隐私声明：[`PRIVACY.md`](./PRIVACY.md)
 
 ## 已完成的本地验证
@@ -30,11 +30,18 @@ npx zeus prune --ip
 
 ## 最新构建包
 
-- 文件：`dist/1121555-环间小词典-2.1.0-20260728142247.zab`
-- SHA-256：`a86f4f134abf8d29f99c2183a02baa775427a93e4e4fe932fd228ab6fcd0eb48`
-- 外层 manifest：3 个 ZPK，包含 9 个目标 `deviceSource`
-  - GTR4：`7864577`、`7930112`、`7930113`
+- 文件：`dist/1121555-环间小词典-2.1.0-20260728180716.zab`
+- SHA-256：`bf425aa1b50982441cbd1ef1fd1e4628eb51585b40ca4dd74351cefc76ebf84f`
+- 外层 manifest：4 个 ZPK，包含 19 个目标 `deviceSource`
+  - GTR4：3 个目标
+  - Cheetah Pro + Balance：5 个目标
+  - T-Rex 3：3 个目标
+  - Active 2（圆形版）：8 个目标
+- 已验证目标 `deviceSource`：
   - Balance：`8519936`、`8519937`、`8519939`
+  - Cheetah Pro：`8126720`、`8126721`
+  - Active 2（圆形版）：`8913152`、`8913153`、`8913155`、`8913159`、`10092800`、`10092801`、`10092803`、`10092807`
+  - GTR4：`7864577`、`7930112`、`7930113`
   - T-Rex 3：`8716544`、`8716545`、`8716547`
 - 配置不包含 `app-side`；仅保留手机端 `setting` 说明页。
 
@@ -50,5 +57,5 @@ Zepp 官方图标要求分两类：
 ## 仍需人工完成
 
 - 在 Balance、GTR4 和 T-Rex 3 真机分别检查启动、英文/中文搜索、结果页释义展开、详情触控上下段、详情返回、历史/收藏、表冠（有则验证）、设置和高考提示。
-- 在 Zepp Console 上传最新 ZAB，核对 APPID、版本、6 个支持设备、权限、隐私声明、市场 240×240 图标、截图、分类和开发者信息。
+- 在 Zepp Console 上传最新 ZAB，核对 APPID、版本、19 个圆形屏目标、权限、隐私声明、市场 240×240 图标、截图、分类和开发者信息。
 - 确认 Console 的 Calling Permissions 与 `app.json` 一致：`device:os.local_storage`、`data:os.device.info`、`device:os.file`。

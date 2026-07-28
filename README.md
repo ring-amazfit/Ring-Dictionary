@@ -11,7 +11,8 @@
   <a href="#界面预览">预览</a> ·
   <a href="#支持设备">设备</a> ·
   <a href="#开发与构建">开发</a> ·
-  <a href="./PRIVACY.md">隐私声明</a>
+  <a href="./PRIVACY.md">隐私声明</a> ·
+  <a href="./README.en.md">English</a>
 </p>
 
 > [!NOTE]
@@ -83,11 +84,16 @@
 | 系列 | 设备目标 | 分辨率目标 | 操作方式 |
 | --- | ---: | ---: | --- |
 | Amazfit Balance | 3 个 | 480 × 480 | 表冠 / 触控 |
+| Amazfit Cheetah Pro | 2 个 | 480 × 480 | 触控 |
+| Amazfit Active 2（圆形版） | 8 个 | 466 × 466 | 表冠 / 触控 |
 | Amazfit GTR 4 / GTR 4 LE | 3 个 | 466 × 466 | 表冠 / 触控 |
 | Amazfit T-Rex 3 | 3 个 | 480 × 480 | 触控 |
 
 > [!TIP]
-> 表冠仅是 Balance/GTR4 的快捷操作，不是功能依赖。T-Rex 3 没有表冠时，候选、结果、历史、收藏和详情释义均可通过屏幕触控完成。
+> 表冠仅是 Balance、Active 2（圆形版）和 GTR4 的快捷操作，不是功能依赖。Cheetah Pro 和 T-Rex 3 没有表冠时，候选、结果、历史、收藏和详情释义均可通过屏幕触控完成。
+>
+> [!NOTE]
+> 当前版本只声明圆形屏目标。方屏 Amazfit Active、Amazfit Active 2（方形版）以及 360 × 360 的 Active Edge 需要独立布局适配，未包含在本次发布范围内。
 
 ## 使用说明
 

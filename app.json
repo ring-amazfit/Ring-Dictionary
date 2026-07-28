@@ -81,6 +81,66 @@
           "sr": "w480"
         },
         {
+          "name": "cheetahpro",
+          "deviceSource": 8126720,
+          "st": "r",
+          "sr": "w480"
+        },
+        {
+          "name": "cheetahpro",
+          "deviceSource": 8126721,
+          "st": "r",
+          "sr": "w480"
+        },
+        {
+          "name": "active2",
+          "deviceSource": 8913152,
+          "st": "r",
+          "sr": "w466"
+        },
+        {
+          "name": "active2",
+          "deviceSource": 8913153,
+          "st": "r",
+          "sr": "w466"
+        },
+        {
+          "name": "active2",
+          "deviceSource": 8913155,
+          "st": "r",
+          "sr": "w466"
+        },
+        {
+          "name": "active2",
+          "deviceSource": 8913159,
+          "st": "r",
+          "sr": "w466"
+        },
+        {
+          "name": "active2",
+          "deviceSource": 10092800,
+          "st": "r",
+          "sr": "w466"
+        },
+        {
+          "name": "active2",
+          "deviceSource": 10092801,
+          "st": "r",
+          "sr": "w466"
+        },
+        {
+          "name": "active2",
+          "deviceSource": 10092803,
+          "st": "r",
+          "sr": "w466"
+        },
+        {
+          "name": "active2",
+          "deviceSource": 10092807,
+          "st": "r",
+          "sr": "w466"
+        },
+        {
           "name": "gtr4",
           "deviceSource": 7930112,
           "st": "r",

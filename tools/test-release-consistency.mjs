@@ -25,13 +25,31 @@ assert.equal(icon.readUInt32BE(20), 240, '市场图标高度必须为 240')
 assert.equal(icon[25], 6, '市场图标必须为 RGBA PNG')
 
 const platforms = app.targets.common.platforms
-assert.equal(platforms.length, 9, '发布目标应为 3 个 Balance + 3 个 GTR4 + 3 个 T-Rex 3')
+assert.equal(platforms.length, 19, '发布目标应为 Balance、Cheetah Pro、Active 2 Round、GTR4 和 T-Rex 3 的 19 个圆屏目标')
 assert.equal(platforms.filter(p => p.name === 'balance').length, 3, 'Balance 目标必须为 3 个')
+assert.equal(platforms.filter(p => p.name === 'cheetahpro').length, 2, 'Cheetah Pro 目标必须为 2 个')
+assert.equal(platforms.filter(p => p.name === 'active2').length, 8, 'Active 2 Round 目标必须为 8 个')
 assert.equal(platforms.filter(p => p.name === 'gtr4').length, 3, 'GTR4 目标必须为 3 个')
 assert.equal(platforms.filter(p => p.name === 'trex3').length, 3, 'T-Rex 3 目标必须为 3 个')
+assert.deepEqual(
+  platforms.filter(p => p.name === 'cheetahpro').map(p => p.deviceSource).sort((a, b) => a - b),
+  [8126720, 8126721],
+  'Cheetah Pro deviceSource 不完整或错误'
+)
+assert.deepEqual(
+  platforms.filter(p => p.name === 'active2').map(p => p.deviceSource).sort((a, b) => a - b),
+  [8913152, 8913153, 8913155, 8913159, 10092800, 10092801, 10092803, 10092807],
+  'Active 2 Round deviceSource 不完整或错误'
+)
 assert.ok(platforms.every(p => p.st === 'r'), '所有发布目标必须为圆屏')
 assert.ok(platforms.every(p => /^w(466|480)$/.test(p.sr)), '目标分辨率必须与圆屏布局一致')
 assert.ok(!platforms.some(p => p.name === 'gts4'), '方屏 GTS4 不应在未适配时发布')
+
+assert.ok(fs.existsSync('README.en.md'), '必须提供英文 README')
+const englishReadme = fs.readFileSync('README.en.md', 'utf8')
+assert.match(englishReadme, /^# Ring Dictionary/m, '英文 README 必须使用英文项目标题')
+assert.match(englishReadme, /Amazfit Cheetah Pro/, '英文 README 必须列出 Cheetah Pro 支持')
+assert.match(englishReadme, /Amazfit Active 2 \(Round\)/, '英文 README 必须列出 Active 2 Round 支持')
 
 const results = fs.readFileSync('page/results.js', 'utf8')
 const home = fs.readFileSync('page/home.js', 'utf8')
