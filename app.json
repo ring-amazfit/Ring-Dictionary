@@ -1,0 +1,115 @@
+{
+  "configVersion": "v3",
+  "app": {
+    "appId": 1121555,
+    "appName": "环间小词典",
+    "appType": "app",
+    "version": {
+      "code": 6,
+      "name": "2.1.0"
+    },
+    "icon": "icon.png",
+    "vender": "",
+    "description": "Offline English and Chinese dictionary for Zepp OS watches"
+  },
+  "runtime": {
+    "apiVersion": {
+      "minVersion": "3.0",
+      "compatible": "3.0.0",
+      "target": "3.5.0"
+    }
+  },
+  "permissions": [
+    "device:os.local_storage",
+    "data:os.device.info",
+    "device:os.file"
+  ],
+  "targets": {
+    "common": {
+      "module": {
+        "page": {
+          "pages": [
+            "page/home",
+            "page/results",
+            "page/detail",
+            "page/history",
+            "page/favorites",
+            "page/settings",
+            "page/about"
+          ],
+          "defaultPage": "page/home"
+        },
+        "setting": {
+          "path": "setting/index"
+        }
+      },
+      "platforms": [
+        {
+          "name": "balance",
+          "deviceSource": 8519936,
+          "st": "r",
+          "sr": "w480"
+        },
+        {
+          "name": "balance",
+          "deviceSource": 8519937,
+          "st": "r",
+          "sr": "w480"
+        },
+        {
+          "name": "balance",
+          "deviceSource": 8519939,
+          "st": "r",
+          "sr": "w480"
+        },
+        {
+          "name": "trex3",
+          "deviceSource": 8716544,
+          "st": "r",
+          "sr": "w480"
+        },
+        {
+          "name": "trex3",
+          "deviceSource": 8716545,
+          "st": "r",
+          "sr": "w480"
+        },
+        {
+          "name": "trex3",
+          "deviceSource": 8716547,
+          "st": "r",
+          "sr": "w480"
+        },
+        {
+          "name": "gtr4",
+          "deviceSource": 7930112,
+          "st": "r",
+          "sr": "w466"
+        },
+        {
+          "name": "gtr4",
+          "deviceSource": 7930113,
+          "st": "r",
+          "sr": "w466"
+        },
+        {
+          "name": "gtr4",
+          "deviceSource": 7864577,
+          "st": "r",
+          "sr": "w466"
+        }
+      ],
+      "designWidth": 480
+    }
+  },
+  "i18n": {
+    "zh-CN": {
+      "appName": "环间小词典"
+    },
+    "en-US": {
+      "appName": "Ring Dictionary",
+      "description": "Offline English and Chinese dictionary for Zepp OS watches"
+    }
+  },
+  "defaultLanguage": "zh-CN"
+}

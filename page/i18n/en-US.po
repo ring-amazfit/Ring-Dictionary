@@ -1,0 +1,224 @@
+msgid "appName"
+msgstr "Ring Dictionary"
+
+msgid "appTitle"
+msgstr "Ring Dictionary"
+
+msgid "version"
+msgstr "v2.1.0"
+
+msgid "openSourceScan"
+msgstr "Open source · Scan to visit"
+
+msgid "sourceCode"
+msgstr "Ring Dictionary source"
+
+msgid "sourceRepo"
+msgstr "Ring-Dictionary"
+
+msgid "return"
+msgstr "Back"
+
+msgid "back"
+msgstr "← Back"
+
+msgid "searchDictionary"
+msgstr "Search"
+
+msgid "relatedWords"
+msgstr "Related words"
+
+msgid "favorite"
+msgstr "♡ Favorite"
+
+msgid "favorited"
+msgstr "♥ Favorited"
+
+msgid "segmentPrefix"
+msgstr "Part "
+
+msgid "segmentSuffix"
+msgstr " · ↑↓ tap / crown scroll"
+
+msgid "definitionPrev"
+msgstr "↑ Prev"
+
+msgid "definitionNext"
+msgstr "↓ Next"
+
+msgid "modeChinese"
+msgstr "Chinese mode"
+
+msgid "modeEnglish"
+msgstr "English mode"
+
+msgid "switchToChinese"
+msgstr "中文"
+
+msgid "switchToEnglish"
+msgstr "EN"
+
+msgid "inputChinese"
+msgstr "Enter Chinese"
+
+msgid "inputWord"
+msgstr "Enter a word"
+
+msgid "clear"
+msgstr "✕"
+
+msgid "searchShort"
+msgstr "Go"
+
+msgid "pinyinPrefix"
+msgstr "Pinyin: "
+
+msgid "pinyinHint"
+msgstr "Enter pinyin and choose a character"
+
+msgid "waitingSearch"
+msgstr "Ready to search"
+
+msgid "searchingChinese"
+msgstr "Searching Chinese..."
+
+msgid "searchingEnglish"
+msgstr "Searching English..."
+
+msgid "searchCompletePrefix"
+msgstr "Search complete: "
+
+msgid "searchCompleteSuffix"
+msgstr " results"
+
+msgid "searchComplete"
+msgstr "Search complete"
+
+msgid "suggestionPrefix"
+msgstr "Suggestions"
+
+msgid "backspace"
+msgstr "⌫"
+
+msgid "search"
+msgstr "→ Search"
+
+msgid "history"
+msgstr "History"
+
+msgid "favorites"
+msgstr "Favorites"
+
+msgid "settings"
+msgstr "Settings"
+
+msgid "about"
+msgstr "About"
+
+msgid "random"
+msgstr "Random"
+
+msgid "historyTitle"
+msgstr "History"
+
+msgid "viewDetail"
+msgstr "Details"
+
+msgid "deleteShort"
+msgstr "Del"
+
+msgid "previousPage"
+msgstr "← Prev"
+
+msgid "clearHistory"
+msgstr "Clear"
+
+msgid "nextPage"
+msgstr "Next →"
+
+msgid "favoritesTitle"
+msgstr "Favorites"
+
+msgid "view"
+msgstr "View"
+
+msgid "delete"
+msgstr "Delete"
+
+msgid "top"
+msgstr "↑ Top"
+
+msgid "settingsTitle"
+msgstr "Settings"
+
+msgid "theme"
+msgstr "Theme"
+
+msgid "darkTheme"
+msgstr "Dark"
+
+msgid "lightTheme"
+msgstr "Light"
+
+msgid "autoComplete"
+msgstr "Autocomplete"
+
+msgid "enabled"
+msgstr "On"
+
+msgid "disabled"
+msgstr "Off"
+
+msgid "gaokaoCountdown"
+msgstr "Gaokao countdown"
+
+msgid "gaokaoPrefix"
+msgstr "Days until "
+
+msgid "gaokaoYearInfix"
+msgstr " Gaokao: "
+
+msgid "gaokaoDaysSuffix"
+msgstr " days"
+
+msgid "debugInfo"
+msgstr "Debug information"
+
+msgid "settingsNote"
+msgstr "Theme changes apply immediately"
+
+msgid "fullKeyboardNote"
+msgstr "QWERTY keyboard is fixed"
+
+msgid "gaokaoNote"
+msgstr "Shows the countdown on the first entry each day"
+
+msgid "notFoundDefinition"
+msgstr "Definition not found"
+
+msgid "clickToViewDefinition"
+msgstr "Tap to view definition"
+
+msgid "searchResultsTitle"
+msgstr "Search results"
+
+msgid "resultCountSuffix"
+msgstr " results"
+
+msgid "openDetail"
+msgstr "Open"
+
+msgid "expandDefinition"
+msgstr "Expand definitions"
+
+msgid "expandedDefinition"
+msgstr "Definitions expanded"
+
+msgid "expandingDefinitionPrefix"
+msgstr "Expanding "
+
+msgid "home"
+msgstr "Home"
+
+msgid "more"
+msgstr "More →"

@@ -1,0 +1,24 @@
+{
+  "name": "ring-dictionary",
+  "version": "2.1.0",
+  "description": "华米手表离线英语词典 - 基于 Zepp OS 4.0",
+  "type": "module",
+  "scripts": {
+    "build": "zeus build",
+    "dev": "zeus dev --target common",
+    "preview": "zeus preview"
+  },
+  "devDependencies": {
+    "@zeppos/zeus-cli": "^1.0.0"
+  },
+  "zeppos": {
+    "appId": 1121555
+  },
+  "_moduleAliases": {
+    "zeppos-app-utils": "node_modules/@zeppos/zeus-cli/private-modules/zeppos-app-utils"
+  },
+  "dependencies": {
+    "@rollup/plugin-commonjs": "^28.0.9",
+    "qrcode": "^1.5.4"
+  }
+}

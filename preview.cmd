@@ -1,0 +1,1 @@
+zeus preview -t "Amazfit Balance"

@@ -1,0 +1,224 @@
+msgid "appName"
+msgstr "环间小词典"
+
+msgid "appTitle"
+msgstr "环间小词典"
+
+msgid "version"
+msgstr "v2.1.0"
+
+msgid "openSourceScan"
+msgstr "开源项目 · 扫码访问"
+
+msgid "sourceCode"
+msgstr "环间小词典源码"
+
+msgid "sourceRepo"
+msgstr "Ring-Dictionary"
+
+msgid "return"
+msgstr "返回"
+
+msgid "back"
+msgstr "← 返回"
+
+msgid "searchDictionary"
+msgstr "查词典"
+
+msgid "relatedWords"
+msgstr "相关单词"
+
+msgid "favorite"
+msgstr "♡ 收藏"
+
+msgid "favorited"
+msgstr "♥ 已收藏"
+
+msgid "segmentPrefix"
+msgstr "第 "
+
+msgid "segmentSuffix"
+msgstr " 段 · ↑↓触控 / 表冠滚动"
+
+msgid "definitionPrev"
+msgstr "↑ 上段"
+
+msgid "definitionNext"
+msgstr "↓ 下段"
+
+msgid "modeChinese"
+msgstr "中文模式"
+
+msgid "modeEnglish"
+msgstr "英文模式"
+
+msgid "switchToChinese"
+msgstr "中文"
+
+msgid "switchToEnglish"
+msgstr "EN"
+
+msgid "inputChinese"
+msgstr "输入中文"
+
+msgid "inputWord"
+msgstr "输入单词"
+
+msgid "clear"
+msgstr "✕"
+
+msgid "searchShort"
+msgstr "查"
+
+msgid "pinyinPrefix"
+msgstr "拼音: "
+
+msgid "pinyinHint"
+msgstr "输入拼音后选择候选字"
+
+msgid "waitingSearch"
+msgstr "待搜索"
+
+msgid "searchingChinese"
+msgstr "中文搜索中..."
+
+msgid "searchingEnglish"
+msgstr "英文搜索中..."
+
+msgid "searchCompletePrefix"
+msgstr "搜索完成，共 "
+
+msgid "searchCompleteSuffix"
+msgstr " 条"
+
+msgid "searchComplete"
+msgstr "搜索完成"
+
+msgid "suggestionPrefix"
+msgstr "建议"
+
+msgid "backspace"
+msgstr "⌫"
+
+msgid "search"
+msgstr "→ 搜索"
+
+msgid "history"
+msgstr "历史"
+
+msgid "favorites"
+msgstr "收藏"
+
+msgid "settings"
+msgstr "设置"
+
+msgid "about"
+msgstr "关于"
+
+msgid "random"
+msgstr "随机"
+
+msgid "historyTitle"
+msgstr "历史记录"
+
+msgid "viewDetail"
+msgstr "查看详情"
+
+msgid "deleteShort"
+msgstr "删"
+
+msgid "previousPage"
+msgstr "← 上页"
+
+msgid "clearHistory"
+msgstr "清空"
+
+msgid "nextPage"
+msgstr "下页 →"
+
+msgid "favoritesTitle"
+msgstr "我的收藏"
+
+msgid "view"
+msgstr "查看"
+
+msgid "delete"
+msgstr "删除"
+
+msgid "top"
+msgstr "↑ 顶部"
+
+msgid "settingsTitle"
+msgstr "设置"
+
+msgid "theme"
+msgstr "主题"
+
+msgid "darkTheme"
+msgstr "深色"
+
+msgid "lightTheme"
+msgstr "浅色"
+
+msgid "autoComplete"
+msgstr "自动补全"
+
+msgid "enabled"
+msgstr "开启"
+
+msgid "disabled"
+msgstr "关闭"
+
+msgid "gaokaoCountdown"
+msgstr "高考倒计时"
+
+msgid "gaokaoPrefix"
+msgstr "距离"
+
+msgid "gaokaoYearInfix"
+msgstr "年高考还有"
+
+msgid "gaokaoDaysSuffix"
+msgstr "天"
+
+msgid "debugInfo"
+msgstr "显示调试信息"
+
+msgid "settingsNote"
+msgstr "主题切换后立即生效"
+
+msgid "fullKeyboardNote"
+msgstr "全键盘输入固定保留"
+
+msgid "gaokaoNote"
+msgstr "高考倒计时每天首次进入时提示"
+
+msgid "notFoundDefinition"
+msgstr "未找到释义"
+
+msgid "clickToViewDefinition"
+msgstr "点击查看释义"
+
+msgid "searchResultsTitle"
+msgstr "搜索结果"
+
+msgid "resultCountSuffix"
+msgstr " 个结果"
+
+msgid "openDetail"
+msgstr "打开详情"
+
+msgid "expandDefinition"
+msgstr "展开释义"
+
+msgid "expandedDefinition"
+msgstr "释义已展开"
+
+msgid "expandingDefinitionPrefix"
+msgstr "展开中 "
+
+msgid "home"
+msgstr "主页"
+
+msgid "more"
+msgstr "更多 →"

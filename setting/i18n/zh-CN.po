@@ -1,0 +1,20 @@
+msgid "settingTitle"
+msgstr "环间小词典设置"
+
+msgid "watchSettings"
+msgstr "手表端设置"
+
+msgid "watchSettingsNote"
+msgstr "主题、自动补全和高考倒计时都保存在手表本地，请在手表端应用的设置页调整。"
+
+msgid "settingGaokao"
+msgstr "高考倒计时"
+
+msgid "settingGaokaoNote"
+msgstr "开启后，每天首次进入手表应用会短暂提示距离下一次高考的天数。"
+
+msgid "settingAbout"
+msgstr "关于"
+
+msgid "settingAboutText"
+msgstr "环间小词典 v2.1.0\n华米手表离线英语词典\n基于 Zepp OS 4.0 开发"

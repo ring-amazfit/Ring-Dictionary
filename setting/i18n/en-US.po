@@ -1,0 +1,20 @@
+msgid "settingTitle"
+msgstr "Ring Dictionary Settings"
+
+msgid "watchSettings"
+msgstr "Watch settings"
+
+msgid "watchSettingsNote"
+msgstr "Theme, autocomplete, and the Gaokao countdown are stored on the watch. Adjust them in the watch app settings."
+
+msgid "settingGaokao"
+msgstr "Gaokao countdown"
+
+msgid "settingGaokaoNote"
+msgstr "When enabled, the watch app briefly shows the days until the next Gaokao on the first entry each day."
+
+msgid "settingAbout"
+msgstr "About"
+
+msgid "settingAboutText"
+msgstr "Ring Dictionary v2.1.0\nOffline dictionary for Zepp OS watches\nBuilt for Zepp OS 4.0"
