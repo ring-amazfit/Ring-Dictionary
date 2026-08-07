@@ -16,7 +16,7 @@
 </p>
 
 > [!NOTE]
-> 当前版本：`v2.1.0` · App ID：`1121555` · version code：`6` · 适用于 Zepp OS 3.0 及以上运行环境。
+> 当前版本：`v2.2.0` · App ID：`1121555` · version code：`7` · 适用于 Zepp OS 3.0 及以上运行环境。
 
 ## 功能概览
 

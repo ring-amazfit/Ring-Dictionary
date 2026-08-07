@@ -8,7 +8,7 @@ An offline English-Chinese dictionary for Amazfit Zepp OS round-screen watches. 
 
 [Chinese README](./README.md) · [Privacy Statement](./PRIVACY.md)
 
-> **Current release:** `v2.1.0` · App ID: `1121555` · version code: `6` · Supports Zepp OS 3.0 and later.
+> **Current release:** `v2.2.0` · App ID: `1121555` · version code: `7` · Supports Zepp OS 3.0 and later.
 
 ## Features
 

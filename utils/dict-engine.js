@@ -70,14 +70,37 @@ function containsChinese(text) {
   return /[一-鿿]/.test(text || '')
 }
 
+// 大小写不敏感字符比较：只对 A-Z 做小写化，绝不修改非字母字符。
+// `| 32` 对非字母会产生污染（如全角逗号 U+FF0C 变成 U+FF2C），导致
+// 含标点/空格/中文的词条永远无法精确匹配。
+function charEq(buf, idx, code) {
+  var c = buf[idx]
+  if (c >= 65 && c <= 90) c |= 32
+  var q = code
+  if (q >= 65 && q <= 90) q |= 32
+  return c === q
+}
+
+// 纯字母目标（不含空格/标点）。词典文件对纯字母词按字母序排列，但对含空格
+// 的词条排序并不遵循 ASCII（空格排在字母之后），因此 isPast 只对纯字母目标
+// 可靠；含空格/标点的目标禁用 isPast 提前退出，改由安全上限终止扫描。
+function isLetterTarget(target) {
+  return /^[a-z]+$/.test(target || '')
+}
+
 // True when the word in `buf` (first `wLen` chars) is alphabetically past
 // `target` and therefore no more prefix matches are possible. Compares only
 // the first `tLen` chars so single-character queries (tLen=1) work correctly
 // — the previous c1-based check broke immediately for any 1-char query.
+// NOTE: the `| 32` lowercase trick only applies to A-Z; applying it to
+// non-letters (space, backslash, Chinese) corrupts the value and can make a
+// normal word look "past" the target, aborting the scan early (e.g. the
+// dict entry `al\nadj` whose backslash became `|` > 'o').
 function isPast(buf, wLen, target, tLen) {
   if (wLen < tLen) return false
   for (var k = 0; k < tLen; k++) {
-    var wc = buf[k] | 32
+    var raw = buf[k]
+    var wc = raw >= 65 && raw <= 90 ? raw | 32 : raw
     var qc = target.charCodeAt(k)
     if (wc > qc) return true
     if (wc < qc) return false
@@ -85,8 +108,14 @@ function isPast(buf, wLen, target, tLen) {
   return false
 }
 
+// 词典源数据中少数词行含字面反斜杠（如 al\nadj、\nadj），属于导出损坏。
+// 这类“词”用户无法输入，也绝不能作为搜索结果/建议返回。
+function isCleanWord(w) {
+  return !!(w && w.indexOf('\\') === -1)
+}
+
 function uniquePush(list, item, keyMap) {
-  if (!item || !item.word || keyMap[item.word]) return
+  if (!item || !item.word || !isCleanWord(item.word) || keyMap[item.word]) return
   keyMap[item.word] = true
   list.push(item)
 }
@@ -97,7 +126,7 @@ function isFuzzyMatch(wordBuf, wordLen, target) {
   if (!target || target.length < 3 || wordLen < target.length) return false
   var ti = 0
   for (var wi = 0; wi < wordLen && ti < target.length; wi++) {
-    if ((wordBuf[wi] | 32) === target.charCodeAt(ti)) ti++
+    if (charEq(wordBuf, wi, target.charCodeAt(ti))) ti++
   }
   return ti === target.length
 }
@@ -105,12 +134,18 @@ function isFuzzyMatch(wordBuf, wordLen, target) {
 // Choose the best byte offset to start scanning from.
 // 2-letter prefix is tightest; fall back to 1-letter (always present).
 // This guarantees we never scan the whole file from offset 0.
+// 词典把撇号开头的词（如 'll、're）按去掉撇号后的字母归入对应字母区，
+// 因此前缀选择要先跳过开头的非字母字符，否则只能从 0 全扫并撞上限。
 function pickStartOffset(target) {
-  if (target.length >= 2) {
-    var two = prefixIndex[target.slice(0, 2)]
+  var t = target
+  var i = 0
+  while (i < t.length && !(t.charCodeAt(i) >= 97 && t.charCodeAt(i) <= 122)) i++
+  if (i > 0) t = t.slice(i)
+  if (t.length >= 2) {
+    var two = prefixIndex[t.slice(0, 2)]
     if (two !== undefined) return two
   }
-  var one = prefixIndex[target.charAt(0)]
+  var one = prefixIndex[t.charAt(0)]
   if (one !== undefined) return one
   return 0
 }
@@ -119,7 +154,7 @@ function DictEngine() {
   this.fd = null
   this.debugMsg = ''
   this.isReady = false
-  this._wBuf = new Uint16Array(64)
+  this._wBuf = new Uint16Array(128)
   this._dBuf = new Uint16Array(512)
   this._entryBuf = new Uint16Array(2048)   // reused for reading a word+definition entry
   this._blockCache = {}                    // window-aligned bytePos -> Uint16Array (LRU)
@@ -301,7 +336,7 @@ DictEngine.prototype.lookup = function(word) {
   var blkIdx = (startOff - blockByte) / 2
   var safety = 0
 
-  while (safety < (target.length >= 3 ? 12000 : MAX_SCAN_CHARS)) {
+  while (safety < MAX_SCAN_CHARS) {
     safety++
 
     if (blkIdx >= arr.length) {
@@ -318,17 +353,15 @@ DictEngine.prototype.lookup = function(word) {
       if (inWord) {
         inWord = false
       } else {
-        var c0 = wLen > 0 ? (wBuf[0] | 32) : 0
-        var c1 = wLen >= 2 ? (wBuf[1] | 32) : 0
-
         // 只有已经找到前缀候选时才能用字典排序提前结束。
         // 没有候选时要保留有限扫描窗口给英文模糊匹配（如 nien → nine）。
-        if (isPast(wBuf, wLen, target, tLen) && (matches.length > 0 || target.length < 3)) break
+        // 含空格/标点的目标禁用 isPast（词典排序不遵循 ASCII），靠上限终止。
+        if (isLetterTarget(target) && isPast(wBuf, wLen, target, tLen) && (matches.length > 0 || target.length < 3)) break
 
         if (wLen === tLen) {
           var exact = true
           for (var k0 = 0; k0 < tLen; k0++) {
-            if ((wBuf[k0] | 32) !== target.charCodeAt(k0)) { exact = false; break }
+            if (!charEq(wBuf, k0, target.charCodeAt(k0))) { exact = false; break }
           }
           if (exact) found = { word: this._bufToStr(wBuf, 0, wLen), definition: this._bufToStr(dBuf, 0, dLen) }
         }
@@ -337,12 +370,12 @@ DictEngine.prototype.lookup = function(word) {
           var sw = wLen >= tLen
           if (sw) {
             for (var k1 = 0; k1 < tLen; k1++) {
-              if ((wBuf[k1] | 32) !== target.charCodeAt(k1)) { sw = false; break }
+              if (!charEq(wBuf, k1, target.charCodeAt(k1))) { sw = false; break }
             }
           }
           if (sw) {
             var wStr = this._bufToStr(wBuf, 0, wLen)
-            if (!found || wStr !== found.word) {
+            if (isCleanWord(wStr) && (!found || wStr !== found.word)) {
               matches.push({ word: wStr, definition: this._bufToStr(dBuf, 0, dLen) })
             }
           }
@@ -352,7 +385,7 @@ DictEngine.prototype.lookup = function(word) {
         // 避免扫描结束后再次从同一 offset 读取和解析一遍词库。
         if (!found && matches.length === 0 && target.length >= 3 && isFuzzyMatch(wBuf, wLen, target)) {
           var fuzzyWord = this._bufToStr(wBuf, 0, wLen)
-          matches.push({ word: fuzzyWord, definition: this._bufToStr(dBuf, 0, dLen) })
+          if (isCleanWord(fuzzyWord)) matches.push({ word: fuzzyWord, definition: this._bufToStr(dBuf, 0, dLen) })
         }
         if (found || matches.length >= 4) break
         wLen = 0
@@ -361,7 +394,7 @@ DictEngine.prototype.lookup = function(word) {
       }
     } else {
       if (inWord) {
-        if (wLen < 64) wBuf[wLen++] = ch
+        if (wLen < 128) wBuf[wLen++] = ch
       } else {
         if (dLen < 512) dBuf[dLen++] = ch
       }
@@ -445,14 +478,14 @@ DictEngine.prototype._prefixFamily = function(target, limit) {
       if (inWord) {
         inWord = false
       } else {
-        if (isPast(wBuf, wLen, target, target.length)) break
+        if (isLetterTarget(target) && isPast(wBuf, wLen, target, target.length)) break
         var ok = wLen >= target.length
         for (var k = 0; ok && k < target.length; k++) {
-          if ((wBuf[k] | 32) !== target.charCodeAt(k)) ok = false
+          if (!charEq(wBuf, k, target.charCodeAt(k))) ok = false
         }
         if (ok) {
           var word = this._bufToStr(wBuf, 0, wLen)
-          if (!seen[word]) {
+          if (isCleanWord(word) && !seen[word]) {
             seen[word] = true
             out.push({ word: word, definition: '' })
           }
@@ -460,7 +493,7 @@ DictEngine.prototype._prefixFamily = function(target, limit) {
         wLen = 0
         inWord = true
       }
-    } else if (inWord && wLen < 64) {
+    } else if (inWord && wLen < 128) {
       wBuf[wLen++] = ch
     }
   }
@@ -854,7 +887,7 @@ DictEngine.prototype.lookupDefinition = function(word) {
   if (!arr) return null
   var blkIdx = (startOff - blockByte) / 2
   var safety = 0
-  while (safety < (target.length >= 3 ? 12000 : MAX_SCAN_CHARS)) {
+  while (safety < MAX_SCAN_CHARS) {
     safety++
     if (blkIdx >= arr.length) {
       blockByte += BLOCK_SIZE * 2
@@ -866,10 +899,10 @@ DictEngine.prototype.lookupDefinition = function(word) {
     if (ch === 10) {
       if (inWord) inWord = false
       else {
-        if (isPast(wBuf, wLen, target, target.length)) break
+        if (isLetterTarget(target) && isPast(wBuf, wLen, target, target.length)) break
         var same = wLen === target.length
         for (var i = 0; same && i < target.length; i++) {
-          if ((wBuf[i] | 32) !== target.charCodeAt(i)) same = false
+          if (!charEq(wBuf, i, target.charCodeAt(i))) same = false
         }
         if (same) {
           return { word: this._bufToStr(wBuf, 0, wLen), definition: this._bufToStr(dBuf, 0, dLen) }
@@ -879,12 +912,58 @@ DictEngine.prototype.lookupDefinition = function(word) {
         inWord = true
       }
     } else if (inWord) {
-      if (wLen < 64) wBuf[wLen++] = ch
+      if (wLen < 128) wBuf[wLen++] = ch
     } else if (dLen < 512) {
       dBuf[dLen++] = ch
     }
   }
   return null
+}
+
+// 继续加载更多英文结果（结果页“更多 →”在最后一页触发）。
+// 初始 search 只返回最多 MAX_WORD_FAMILY+1 条；本方法按 offset 返回后续词族。
+DictEngine.prototype.searchMore = function(query, offset) {
+  var text = normalizeWord(query)
+  if (!text || containsChinese(text)) return []
+  offset = offset || 0
+  if (!this._moreLists) this._moreLists = {}
+  if (!this._moreLists[text]) {
+    this._moreLists[text] = this._buildMoreList(text)
+    var keys = Object.keys(this._moreLists)
+    if (keys.length > 8) delete this._moreLists[keys[0]]
+  }
+  var all = this._moreLists[text]
+  return all.slice(offset, offset + 20)
+}
+
+DictEngine.prototype._buildMoreList = function(text) {
+  var list = []
+  var seen = {}
+  this._loadSupp()
+  var direct = this._suppWordMap && this._suppWordMap[text]
+  if (direct) {
+    uniquePush(list, { word: direct.w, definition: direct.d, exact: true }, seen)
+    var family = this._prefixFamily(text, 200)
+    for (var fi = 0; fi < family.length; fi++) {
+      uniquePush(list, { word: family[fi].word, definition: family[fi].definition, exact: false }, seen)
+    }
+  } else {
+    var result = this.lookup(text)
+    if (result) {
+      if (result.definition && result.definition !== '未找到释义') {
+        uniquePush(list, { word: result.word, definition: result.definition, exact: true }, seen)
+      }
+      var suggestions = result.suggestions || []
+      for (var si = 0; si < suggestions.length; si++) {
+        uniquePush(list, { word: suggestions[si].word, definition: suggestions[si].definition || '', exact: false }, seen)
+      }
+    }
+    var family2 = this._prefixFamily(text, 200)
+    for (var fi2 = 0; fi2 < family2.length; fi2++) {
+      uniquePush(list, { word: family2[fi2].word, definition: family2[fi2].definition, exact: false }, seen)
+    }
+  }
+  return list
 }
 
 // 输入建议必须保持纯内存，不能调用 prefixSuggest() 触发主词库同步 I/O。
@@ -939,24 +1018,22 @@ DictEngine.prototype.prefixSuggest = function(q, limit) {
       if (inWord) {
         inWord = false
       } else {
-        var c0 = wLen > 0 ? (wBuf[0] | 32) : 0
-        var c1 = wLen >= 2 ? (wBuf[1] | 32) : 0
         if (isPast(wBuf, wLen, q, tLen)) break
         if (wLen >= tLen) {
           var ok = true
           for (var k = 0; k < tLen; k++) {
-            if ((wBuf[k] | 32) !== q.charCodeAt(k)) { ok = false; break }
+            if (!charEq(wBuf, k, q.charCodeAt(k))) { ok = false; break }
           }
           if (ok) {
             var wd = this._bufToStr(wBuf, 0, wLen)
-            if (!seen[wd]) { seen[wd] = true; out.push(wd) }
+            if (isCleanWord(wd) && !seen[wd]) { seen[wd] = true; out.push(wd) }
           }
         }
         wLen = 0
         inWord = true
       }
     } else {
-      if (inWord) { if (wLen < 64) wBuf[wLen++] = ch }
+      if (inWord) { if (wLen < 128) wBuf[wLen++] = ch }
     }
   }
   return out

@@ -1,8 +1,12 @@
 import { createWidget, widget, text_style, align, prop } from '@zos/ui'
 import { px } from '@zos/utils'
+import { back } from '@zos/router'
 import { getText } from '@zos/i18n'
 import { storage } from '../utils/storage'
 import { THEMES, DECO } from '../utils/constants'
+
+// 关于页：顶部应用名+版本；中部双卡片（本项目源码 + 爱发电赞赏）；底部返回按钮。
+// 返回必须导入 @zos/router 的 back（此前缺导入导致按钮点击报错、无法返回）。
 
 Page({
   state: { theme: 'dark' },
@@ -33,13 +37,13 @@ Page({
 
     // ======== 顶部：应用名 + 版本 ========
     createWidget(widget.FILL_RECT, {
-      x: px(140), y: px(36), w: px(200), h: px(3),
+      x: px(140), y: px(32), w: px(200), h: px(3),
       radius: px(2), color: th.accent
     })
 
     createWidget(widget.TEXT, {
-      x: px(100), y: px(46),
-      w: px(280), h: px(40),
+      x: px(100), y: px(42),
+      w: px(280), h: px(38),
       text_size: px(30),
       color: th.accent,
       align_h: align.CENTER_H,
@@ -50,15 +54,15 @@ Page({
     // 版本号药丸
     try {
       createWidget(widget.FILL_RECT, {
-        x: px(200), y: px(90),
-        w: px(80), h: px(18),
-        radius: px(9),
+        x: px(196), y: px(88),
+        w: px(88), h: px(20),
+        radius: px(10),
         color: th.keyboardBg
       })
     } catch (e) {}
     createWidget(widget.TEXT, {
-      x: px(200), y: px(90),
-      w: px(80), h: px(18),
+      x: px(196), y: px(88),
+      w: px(88), h: px(20),
       text_size: px(12),
       color: th.textSecondary,
       align_h: align.CENTER_H,
@@ -66,44 +70,76 @@ Page({
       text: getText('version')
     })
 
-    // ======== 开源项目二维码区 ========
-    createWidget(widget.TEXT, {
-      x: px(80), y: px(116),
-      w: px(320), h: px(18),
-      text_size: px(13),
-      color: th.accent,
-      align_h: align.CENTER_H,
-      align_v: align.CENTER_V,
-      text: getText('openSourceScan')
+    // ======== 双二维码卡片 ========
+    // 卡片1：本项目源码（左）
+    createWidget(widget.FILL_RECT, {
+      x: px(56), y: px(120), w: px(180), h: px(236),
+      radius: px(20), color: th.keyboardBg
     })
-
-    // 本项目源码 Ring-Dictionary（居中放大）
+    createWidget(widget.FILL_RECT, {
+      x: px(56), y: px(120), w: px(180), h: px(236),
+      radius: px(20), color: th.panel
+    })
     createWidget(widget.IMG, {
-      x: px(140), y: px(140),
-      w: px(200), h: px(200),
+      x: px(61), y: px(128),
+      w: px(170), h: px(170),
       src: 'github_qr_ring.png'
     })
     createWidget(widget.TEXT, {
-      x: px(80), y: px(348),
-      w: px(320), h: px(16),
+      x: px(56), y: px(304),
+      w: px(180), h: px(18),
       text_size: px(13),
-      color: th.text,
+      color: th.accent,
       align_h: align.CENTER_H,
       align_v: align.CENTER_V,
       text: getText('sourceCode')
     })
     createWidget(widget.TEXT, {
-      x: px(80), y: px(366),
-      w: px(320), h: px(14),
+      x: px(56), y: px(324),
+      w: px(180), h: px(14),
       text_size: px(10),
       color: th.textSecondary,
       align_h: align.CENTER_H,
       align_v: align.CENTER_V,
+      text_style: text_style.TRUNCATE,
       text: getText('sourceRepo')
     })
 
+    // 卡片2：爱发电赞赏（右）
+    createWidget(widget.FILL_RECT, {
+      x: px(244), y: px(120), w: px(180), h: px(236),
+      radius: px(20), color: th.keyboardBg
+    })
+    createWidget(widget.FILL_RECT, {
+      x: px(244), y: px(120), w: px(180), h: px(236),
+      radius: px(20), color: th.panel
+    })
+    createWidget(widget.IMG, {
+      x: px(249), y: px(128),
+      w: px(170), h: px(170),
+      src: 'ifdian_qr_ring.png'
+    })
+    createWidget(widget.TEXT, {
+      x: px(244), y: px(304),
+      w: px(180), h: px(18),
+      text_size: px(13),
+      color: th.accent,
+      align_h: align.CENTER_H,
+      align_v: align.CENTER_V,
+      text: getText('supportTitle')
+    })
+    createWidget(widget.TEXT, {
+      x: px(244), y: px(324),
+      w: px(180), h: px(14),
+      text_size: px(10),
+      color: th.textSecondary,
+      align_h: align.CENTER_H,
+      align_v: align.CENTER_V,
+      text_style: text_style.TRUNCATE,
+      text: getText('supportRepo')
+    })
+
     // ======== 底部返回按钮 ========
-    // 用最稳的 back() 无参调用，避免 anim 参数在某些版本导致返回无效
     createWidget(widget.BUTTON, {
       x: px(170), y: px(398),
       w: px(140), h: px(40),

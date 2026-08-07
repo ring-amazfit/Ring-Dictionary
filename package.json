@@ -1,6 +1,6 @@
 {
   "name": "ring-dictionary",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "华米手表离线英语词典 - 基于 Zepp OS 4.0",
   "type": "module",
   "scripts": {

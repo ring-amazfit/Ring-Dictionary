@@ -7,10 +7,10 @@ const lock = JSON.parse(fs.readFileSync('package-lock.json', 'utf8'))
 
 assert.equal(app.app.appId, 1121555, 'app.json APPID 必须为 1121555')
 assert.equal(pkg.zeppos.appId, 1121555, 'package.json APPID 必须为 1121555')
-assert.equal(app.app.version.name, '2.1.0', 'app.json 版本名不一致')
-assert.equal(pkg.version, '2.1.0', 'package.json 版本不一致')
-assert.equal(lock.version, '2.1.0', 'package-lock 根版本不一致')
-assert.equal(lock.packages[''].version, '2.1.0', 'package-lock 根 package 版本不一致')
+assert.equal(app.app.version.name, '2.2.0', 'app.json 版本名不一致')
+assert.equal(pkg.version, '2.2.0', 'package.json 版本不一致')
+assert.equal(lock.version, '2.2.0', 'package-lock 根版本不一致')
+assert.equal(lock.packages[''].version, '2.2.0', 'package-lock 根 package 版本不一致')
 assert.deepEqual(app.permissions, [
   'device:os.local_storage',
   'data:os.device.info',

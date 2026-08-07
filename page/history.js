@@ -5,6 +5,7 @@ import { getText } from '@zos/i18n'
 import dictEngine from '../utils/dict-engine'
 import { storage } from '../utils/storage'
 import { THEMES, SCREEN, CROWN, DECO } from '../utils/constants'
+import { bindCrown } from '../utils/crown'
 
 // 表冠由 bindCrown 统一按官方规范处理：KEY_HOME + 有效 degree + Math.sign + 轻节流。
 

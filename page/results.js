@@ -35,7 +35,8 @@ Page({
     expandGeneration: 0,
     expandPending: [],
     expandDone: 0,
-    expandTimer: null
+    expandTimer: null,
+    noMore: false
   },
 
   onInit(params) {
@@ -274,7 +275,7 @@ Page({
       }
     }
 
-    this.moreBtn.setProperty(prop.MORE, { text: maxPage > 0 ? getText('more') : ' ' })
+    this.moreBtn.setProperty(prop.MORE, { text: !this.state.noMore && this.state.results.length > 0 ? getText('more') : ' ' })
     this.pageText.setProperty(prop.MORE, {
       text: (this.state.page + 1) + '/' + (maxPage + 1)
     })
@@ -362,6 +363,11 @@ Page({
   _changePage(step) {
     var perPage = SCREEN.RESULTS_PER_PAGE
     var maxPage = Math.max(0, Math.ceil(this.state.results.length / perPage) - 1)
+    // 已在最后一页且向右翻 → 尝试继续加载更多结果（第 4 点：更多 →）
+    if (step > 0 && this.state.page >= maxPage) {
+      this._loadMore()
+      return
+    }
     var next = this.state.page + step
     if (next < 0) next = 0
     if (next > maxPage) next = maxPage
@@ -369,6 +375,31 @@ Page({
       this.state.page = next
       this._renderPage()
     }
+  },
+
+  // 结果已达初始上限时，点“更多 →”在最后一页继续加载下一批词族结果。
+  _loadMore() {
+    if (this.state.noMore || this._loadingMore) return
+    var q = this.state.query
+    if (!q) return
+    this._loadingMore = true
+    var more = []
+    try {
+      more = dictEngine.searchMore(q, this.state.results.length) || []
+    } catch (e) {
+      more = []
+    }
+    this._loadingMore = false
+    if (!more.length) {
+      this.state.noMore = true
+      this._renderPage()
+      return
+    }
+    var oldLen = this.state.results.length
+    this.state.results = this.state.results.concat(more)
+    // 落在新加载结果所在的第一页：旧列表最后一页若未满，保持原页即可。
+    this.state.page = Math.floor(oldLen / SCREEN.RESULTS_PER_PAGE)
+    this._renderPage()
   },
 
   onDestroy() {

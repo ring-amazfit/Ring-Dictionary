@@ -5,7 +5,7 @@ msgid "appTitle"
 msgstr "Ring Dictionary"
 
 msgid "version"
-msgstr "v2.1.0"
+msgstr "v2.2.0"
 
 msgid "openSourceScan"
 msgstr "Open source · Scan to visit"
@@ -15,6 +15,12 @@ msgstr "Ring Dictionary source"
 
 msgid "sourceRepo"
 msgstr "Ring-Dictionary"
+
+msgid "supportTitle"
+msgstr "Support on Aifadian"
+
+msgid "supportRepo"
+msgstr "ifdian.net/a/shynion"
 
 msgid "return"
 msgstr "Back"

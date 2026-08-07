@@ -3,9 +3,18 @@
 ## 当前版本
 
 - APPID：`1121555`
-- 版本：`2.1.0`（code `6`）
+- 版本：`2.2.0`（code `7`）
 - 目标：3 个 Balance + 2 个 Cheetah Pro + 8 个 Active 2（圆形版）+ 3 个 GTR4 / GTR4 LE + 3 个 T-Rex 3，共 19 个圆屏目标
 - 本地隐私声明：[`PRIVACY.md`](./PRIVACY.md)
+
+## v2.2.0 变更
+
+- 关于页重构：新增爱发电赞赏二维码（`ifdian_qr_ring.png`），修复返回按钮缺导入导致的无法返回。
+- 修复部分词条搜到但详情无释义（引擎 `isPast`/精确匹配 `| 32` 污染非字母、扫描上限过小、单词缓冲 64 字符截断）。
+- 修复未找到词相关崩溃：历史页缺失 `bindCrown` 导入，打开历史页即死机。
+- 新增搜索结果「更多 →」继续加载更多词族。
+- 拼音候选表冠翻页节流放宽至 350ms，避免一旋多翻。
+- 拼音字库精简：8104 → 4151 字，删除词库 0 频生僻字并常用前置。
 
 ## 已完成的本地验证
 
@@ -21,17 +30,18 @@ node tools/test-i18n-keys.mjs
 node tools/test-gaokao-i18n.mjs
 node --loader ./tools/loader.mjs tools/test-word-family-search.mjs
 node --loader ./tools/loader.mjs tools/test-cn-read-budget.mjs
-node --loader ./tools/loader.mjs tools/profile-io.mjs
+node --loader ./tools/loader.mjs tools/test-detail-navigation-regression.mjs
+node --loader ./tools/loader.mjs tools/test-searchmore-and-definitions.mjs
 npx zeus build
 npx zeus prune --ip
 ```
 
-结果：源码语法/JSON、真实词库、表冠结构、中文读取预算、结果页展开、日期边界、双语 PO key、ZAB 构建均已通过。
+结果：源码语法/JSON、真实词库（含全量 lookupDefinition 命中与 searchMore）、表冠结构、中文读取预算、结果页展开、日期边界、双语 PO key、ZAB 构建均已通过。
 
 ## 最新构建包
 
-- 文件：`dist/1121555-环间小词典-2.1.0-20260728180716.zab`
-- SHA-256：`bf425aa1b50982441cbd1ef1fd1e4628eb51585b40ca4dd74351cefc76ebf84f`
+- 文件：`dist/1121555-环间小词典-2.2.0-20260807235346.zab`
+- SHA-256：`f5851e889cc4d76a49b50ea7c3e6dd0a6ae949636de5ff41c608369f6b0bc27d`
 - 外层 manifest：4 个 ZPK，包含 19 个目标 `deviceSource`
   - GTR4：3 个目标
   - Cheetah Pro + Balance：5 个目标

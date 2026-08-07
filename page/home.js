@@ -157,11 +157,13 @@ Page({
     this._updateCandidates()
     this._updateSuggestions()
     this._maybeShowGaokaoToast()
+    // 拼音候选翻页的表冠节流比默认更宽松（350ms）：Balance 等设备旋转一圈会
+    // 连发多个事件，默认 130ms 会一旋翻好几页。其他页面仍用 bindCrown 默认值。
     this._unbindCrown = bindCrown(function(step) {
       if (self.state.chineseMode && self.state.candidates.length > SCREEN.CANDIDATES_PER_PAGE) {
         self._changeCandidatePage(step)
       }
-    })
+    }, 350)
   },
 
   _renderQwerty(th) {

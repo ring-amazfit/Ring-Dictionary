@@ -5,7 +5,7 @@ msgid "appTitle"
 msgstr "环间小词典"
 
 msgid "version"
-msgstr "v2.1.0"
+msgstr "v2.2.0"
 
 msgid "openSourceScan"
 msgstr "开源项目 · 扫码访问"
@@ -15,6 +15,12 @@ msgstr "环间小词典源码"
 
 msgid "sourceRepo"
 msgstr "Ring-Dictionary"
+
+msgid "supportTitle"
+msgstr "爱发电 · 赞赏支持"
+
+msgid "supportRepo"
+msgstr "ifdian.net/a/shynion"
 
 msgid "return"
 msgstr "返回"
