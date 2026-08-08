@@ -40,8 +40,8 @@ npx zeus prune --ip
 
 ## 最新构建包
 
-- 文件：`dist/1121555-环间小词典-2.2.0-20260808180904.zab`
-- SHA-256：`f6f028db5785d115d2145969217970075c17e18108d14cf1b821835098735aca`
+- 文件：`dist/1121555-环间小词典-2.2.0-20260808191635.zab`
+- SHA-256：`ddb4ca8582c366c537b12f65c1a96a63bfffece2b897d294ce2575f1f16d5a17`
 - 外层 manifest：4 个 ZPK，包含 19 个目标 `deviceSource`
   - GTR4：3 个目标
   - Cheetah Pro + Balance：5 个目标

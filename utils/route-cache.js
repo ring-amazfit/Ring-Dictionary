@@ -20,6 +20,11 @@ function readRoutes() {
   }
 }
 
+// 路由条目序列化上限：sessionStorage 容量有限，load more 后结果可能上百条，
+// 中文长释义条目序列化可达几十 KB。超过上限时降级为只保留 query，
+// 结果页 onInit 检测到空结果 + query 时自动用 query 重建。
+var MAX_ROUTE_BYTES = 98304 // 96KB，4 条路由共约 384KB
+
 function writeRoutes(routes) {
   try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(routes)) } catch (e) {}
 }
@@ -28,6 +33,11 @@ export function saveResultRoute(payload) {
   serial = (serial + 1) % 1000000
   var token = String(Date.now()) + '-' + String(serial)
   var entry = { token: token, payload: payload }
+  // 大小防护：超限时丢弃大 payload，仅保留 query/reads，结果页按 query 重建。
+  var raw = JSON.stringify(entry)
+  if (raw.length > MAX_ROUTE_BYTES) {
+    entry = { token: token, payload: { query: payload.query, reads: payload.reads || 0, truncated: true } }
+  }
   var routes = readRoutes().filter(function(item) { return item && item.token !== token })
   routes.unshift(entry)
   if (routes.length > MAX_ROUTES) routes = routes.slice(0, MAX_ROUTES)

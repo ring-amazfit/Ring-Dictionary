@@ -46,6 +46,8 @@ Page({
     var routed = p.token ? consumeResultRoute(p.token) : null
     this.state.query = (routed && routed.query) || p.query || ''
     this.state.reads = routed && routed.reads !== undefined ? routed.reads : (p.reads || 0)
+    // 从详情 back() 返回时恢复原页码，避免跳回第 1 页（越界由 _renderPage clamp）。
+    this.state.page = routed && typeof routed.page === 'number' ? routed.page : 0
     // 优先从进程内 token 取完整结果；兼容直接数组和旧版内层 JSON。
     if (routed && Array.isArray(routed.results)) {
       this.state.results = routed.results
@@ -309,7 +311,8 @@ Page({
       var resultToken = saveResultRoute({
         query: self.state.query,
         results: self.state.results,
-        reads: self.state.reads || 0
+        reads: self.state.reads || 0,
+        page: self.state.page
       })
       push({
         url: 'page/detail',
@@ -392,28 +395,34 @@ Page({
   },
 
   // 结果已达初始上限时，点“更多 →”在最后一页继续加载下一批词族结果。
+  // 异步执行：先刷新按钮文案给用户反馈，再同步读取下一批（避免点击后无响应感）。
   _loadMore() {
     if (this.state.noMore || this._loadingMore) return
     var q = this.state.query
     if (!q) return
     this._loadingMore = true
-    var more = []
-    try {
-      more = dictEngine.searchMore(q, this.state.results.length) || []
-    } catch (e) {
-      more = []
-    }
-    this._loadingMore = false
-    if (!more.length) {
-      this.state.noMore = true
-      this._renderPage()
-      return
-    }
-    var oldLen = this.state.results.length
-    this.state.results = this.state.results.concat(more)
-    // 落在新加载结果所在的第一页：旧列表最后一页若未满，保持原页即可。
-    this.state.page = Math.floor(oldLen / SCREEN.RESULTS_PER_PAGE)
-    this._renderPage()
+    var self = this
+    this.moreBtn.setProperty(prop.MORE, { text: getText('loadingMore') })
+    this._loadMoreTimer = setTimeout(function() {
+      self._loadMoreTimer = null
+      var more = []
+      try {
+        more = dictEngine.searchMore(q, self.state.results.length) || []
+      } catch (e) {
+        more = []
+      }
+      self._loadingMore = false
+      if (!more.length) {
+        self.state.noMore = true
+        self._renderPage()
+        return
+      }
+      var oldLen = self.state.results.length
+      self.state.results = self.state.results.concat(more)
+      // 落在新加载结果所在的第一页：旧列表最后一页若未满，保持原页即可。
+      self.state.page = Math.floor(oldLen / SCREEN.RESULTS_PER_PAGE)
+      self._renderPage()
+    }, 30)
   },
 
   onDestroy() {
@@ -421,6 +430,10 @@ Page({
     if (this.state.expandTimer) {
       clearTimeout(this.state.expandTimer)
       this.state.expandTimer = null
+    }
+    if (this._loadMoreTimer) {
+      clearTimeout(this._loadMoreTimer)
+      this._loadMoreTimer = null
     }
     if (this._unbindCrown) this._unbindCrown()
   }

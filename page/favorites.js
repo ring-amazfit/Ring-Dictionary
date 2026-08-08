@@ -2,9 +2,22 @@ import { createWidget, widget, text_style, align, prop } from '@zos/ui'
 import { px } from '@zos/utils'
 import { push, back } from '@zos/router'
 import { getText } from '@zos/i18n'
+import { sessionStorage } from '@zos/storage'
 import { storage } from '../utils/storage'
 import { THEMES, SCREEN, CROWN, DECO } from '../utils/constants'
 import { bindCrown } from '../utils/crown'
+
+// 收藏页页码持久化：从详情 back() 返回时恢复原页码，避免跳回第 1 页。
+var PAGE_KEY = 'dict_favorites_page_v1'
+function savePage(p) {
+  try { sessionStorage.setItem(PAGE_KEY, String(p)) } catch (e) {}
+}
+function loadPage() {
+  try {
+    var v = sessionStorage.getItem(PAGE_KEY)
+    return v ? parseInt(v, 10) || 0 : 0
+  } catch (e) { return 0 }
+}
 
 // 表冠由 bindCrown 统一按官方规范处理：KEY_HOME + 有效 degree + Math.sign + 轻节流。
 
@@ -24,6 +37,7 @@ Page({
   onInit() {
     this.state.favorites = storage.getFavorites()
     this.state.theme = storage.getTheme()
+    this.state.page = loadPage()
   },
 
   build() {
@@ -219,6 +233,7 @@ Page({
   },
 
   _open(item) {
+    savePage(this.state.page)
     push({
       url: 'page/detail',
       params: JSON.stringify({
@@ -239,6 +254,7 @@ Page({
     var maxPage = Math.max(0, Math.ceil(self.state.favorites.length / perPage) - 1)
     if (self.state.page > maxPage) self.state.page = maxPage
     self._renderPage()
+    savePage(self.state.page)
   },
 
   _changePage(step) {
@@ -250,6 +266,7 @@ Page({
     if (next !== this.state.page) {
       this.state.page = next
       this._renderPage()
+      savePage(next)
     }
   },
 

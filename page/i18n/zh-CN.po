@@ -226,6 +226,9 @@ msgstr "展开中 "
 msgid "moreHint"
 msgstr "结果较多，点「更多 →」可继续加载"
 
+msgid "loadingMore"
+msgstr "加载中…"
+
 msgid "home"
 msgstr "主页"
 

@@ -226,6 +226,9 @@ msgstr "Expanding "
 msgid "moreHint"
 msgstr "More results available (tap More to load)"
 
+msgid "loadingMore"
+msgstr "Loading..."
+
 msgid "home"
 msgstr "Home"
 
