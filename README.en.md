@@ -19,17 +19,18 @@ An offline English-Chinese dictionary for Amazfit Zepp OS round-screen watches. 
 - The dictionary runs entirely offline. No account, network connection, advertising, or cloud API is required.
 - Result cards show definition previews. Missing definitions are resolved only after opening a detail page or expanding definitions, keeping search responsive.
 - Pagination and bounded caches prevent full-dictionary preloading, excessive synchronous reads, and memory spikes.
+- When results hit the initial limit, tapping More on the last page loads additional word-family results (for example, `pen` continues through `pencil`, `penny`, and more).
 
 ### QWERTY and Pinyin input
 
 - A fixed QWERTY keyboard supports English words and Pinyin.
-- Chinese mode provides character candidates, candidate paging, backspace, and clear actions.
+- Chinese mode provides character candidates, candidate paging, backspace, and clear actions. The Pinyin candidate set is trimmed to everyday characters and ordered by usage frequency.
 - English mode provides left and right cursor controls, backspace, and direct search.
-- Crown-free watches can use visible touch controls for candidate paging and result navigation.
+- Pinyin candidate paging uses a relaxed crown throttle to avoid skipping several pages in one rotation. Crown-free watches can use visible touch controls for candidate paging and result navigation.
 
 ### Details, history, and favorites
 
-- Detail pages display the word, definition, favorite state, and related terms.
+- Detail pages display the word, definition, favorite state, and related terms. A localized placeholder is shown instead of a blank page when no definition exists.
 - Long definitions have touch controls for previous and next sections. Balance, Active 2 Round, and GTR 4 also support digital-crown shortcuts.
 - Search results, history, and favorites all provide touch paging.
 - Returning from a detail page restores the original result page without relying on shared JavaScript global state.
@@ -41,6 +42,10 @@ An offline English-Chinese dictionary for Amazfit Zepp OS round-screen watches. 
 - The detail page displays the current countdown.
 - Dark and light themes, autocomplete, and debug information can be configured locally.
 - The phone-side settings page provides guidance only. It does not expose toggles that cannot synchronize to the watch.
+
+### About page and support
+
+- The About page shows QR codes for the project source repository and the Aifadian support page, with crown/touch back navigation.
 
 ## Screenshots
 
@@ -189,6 +194,7 @@ node tools/test-results-preview-style.mjs
 node tools/test-i18n-keys.mjs
 node tools/test-release-consistency.mjs
 node --loader ./tools/loader.mjs tools/test-detail-navigation-regression.mjs
+node --loader ./tools/loader.mjs tools/test-searchmore-and-definitions.mjs
 node --loader ./tools/loader.mjs tools/test-word-family-search.mjs
 node --loader ./tools/loader.mjs tools/test-cn-read-budget.mjs
 npx zeus build

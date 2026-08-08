@@ -189,6 +189,12 @@ Page({
       click_func: function() { self._startExpandDefinitions() }
     })
 
+    // 初始结果已达上限时提示可继续加载（仅满 21 条时显示，点击更多后隐藏）。
+    this.moreHint = createWidget(widget.TEXT, {
+      x: px(60), y: px(362), w: px(360), h: px(16), text_size: px(11),
+      color: th.textSecondary, align_h: align.CENTER_H, align_v: align.CENTER_V, text: ''
+    })
+
 
     var navY = px(384)
     var navBW = px(68)
@@ -276,6 +282,11 @@ Page({
     }
 
     this.moreBtn.setProperty(prop.MORE, { text: !this.state.noMore && this.state.results.length > 0 ? getText('more') : ' ' })
+    if (this.moreHint) {
+      this.moreHint.setProperty(prop.MORE, {
+        text: (!this.state.noMore && this.state.results.length === 21) ? getText('moreHint') : ''
+      })
+    }
     this.pageText.setProperty(prop.MORE, {
       text: (this.state.page + 1) + '/' + (maxPage + 1)
     })
@@ -319,7 +330,10 @@ Page({
     this.state.expandGeneration += 1
     var generation = this.state.expandGeneration
     this.state.expandPending = []
-    for (var i = 0; i < this.state.results.length; i++) {
+    // 只展开当前页可见条目：继续加载后结果可达近百条，全量展开会长时间占用主线程。
+    var pageStart = this.state.page * SCREEN.RESULTS_PER_PAGE
+    var pageEnd = pageStart + SCREEN.RESULTS_PER_PAGE
+    for (var i = pageStart; i < pageEnd && i < this.state.results.length; i++) {
       if (!this.state.results[i].definition) this.state.expandPending.push(i)
     }
     this.state.expandDone = 0

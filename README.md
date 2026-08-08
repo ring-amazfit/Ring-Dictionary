@@ -27,17 +27,18 @@
 - 词库完全离线处理，不需要账号、网络、广告或云端接口。
 - 结果页提供释义预览；缺失释义只在打开详情或点击展开时补查，避免搜索过程卡顿。
 - 结果页使用分页与受控缓存，避免整本预加载词库、超量同步读取和内存峰值。
+- 结果超过初始上限时，在最后一页点「更多 →」可继续加载更多词族结果（如 `pen` 可继续展开到 `penny`、`pencil` 等）。
 
 ### QWERTY 与拼音输入
 
 - 使用固定 QWERTY 键盘，适合圆形屏幕输入英文和拼音。
-- 中文模式提供候选字、候选翻页、删除和清空。
+- 中文模式提供候选字、候选翻页、删除和清空；拼音候选字库已按日常使用频率精简排序，常用字优先。
 - 英文模式提供光标左移、右移、退格和快速搜索。
-- T-Rex 3 等无表冠设备可完全使用页面触控按钮完成候选翻页和结果操作。
+- 拼音候选翻页已针对表冠连发事件做宽松节流，避免一旋多翻；T-Rex 3 等无表冠设备可完全使用触控按钮完成候选翻页和结果操作。
 
 ### 详情、历史与收藏
 
-- 详情页显示单词、释义、收藏状态和相关词。
+- 详情页显示单词、释义、收藏状态和相关词；未找到释义时显示本地化占位提示而非空白。
 - 长释义提供 `↑ 上段` / `↓ 下段` 触控按钮；Balance/GTR4 也可使用表冠快捷滚动。
 - 搜索结果、历史记录和收藏列表均支持触控翻页。
 - 详情返回会恢复原结果页，不依赖页面脚本之间共享 JavaScript 全局变量。
@@ -49,6 +50,10 @@
 - 详情页显示当前倒计时。
 - 支持深色/浅色主题、自动补全和调试信息开关。
 - 手机端仅提供设置说明，不显示无法同步到手表的伪开关。
+
+### 关于页与赞赏
+
+- 关于页展示本项目源码二维码和爱发电赞赏二维码，支持表冠/触控返回。
 
 ## 界面预览
 
@@ -199,6 +204,7 @@ node tools/test-results-preview-style.mjs
 node tools/test-i18n-keys.mjs
 node tools/test-release-consistency.mjs
 node --loader ./tools/loader.mjs tools/test-detail-navigation-regression.mjs
+node --loader ./tools/loader.mjs tools/test-searchmore-and-definitions.mjs
 node --loader ./tools/loader.mjs tools/test-word-family-search.mjs
 node --loader ./tools/loader.mjs tools/test-cn-read-budget.mjs
 npx zeus build

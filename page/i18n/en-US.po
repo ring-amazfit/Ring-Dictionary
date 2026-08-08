@@ -223,6 +223,9 @@ msgstr "Definitions expanded"
 msgid "expandingDefinitionPrefix"
 msgstr "Expanding "
 
+msgid "moreHint"
+msgstr "More results available (tap More to load)"
+
 msgid "home"
 msgstr "Home"
 

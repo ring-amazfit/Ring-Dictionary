@@ -354,7 +354,9 @@ Page({
         }
       }
     }
-    if (allChars.length > 60) allChars = allChars.slice(0, 60)
+    // 字库精简后单音节最多 62 字（ji）；模糊匹配会合并多个音节，仍保留一个
+    // 较高的总上限（96）防止候选爆炸，但不再截断任何单个音节的完整候选。
+    if (allChars.length > 96) allChars = allChars.slice(0, 96)
     this.state.candidates = allChars
     var perPage = SCREEN.CANDIDATES_PER_PAGE
     var maxPage = Math.ceil(allChars.length / perPage) - 1
