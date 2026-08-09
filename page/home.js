@@ -186,23 +186,23 @@ Page({
       }
     }
     createWidget(widget.BUTTON, {
-      x: px(52), y: px(362), w: px(84), h: px(36), radius: px(14),
+      x: px(52), y: px(362), w: px(84), h: px(34), radius: px(14),
       text: getText('backspace'), text_size: px(20), color: th.text,
       press_color: th.border, normal_color: th.keyboardKey,
       click_func: function() { self._onBackspace() }
     })
     createWidget(widget.BUTTON, {
-      x: px(142), y: px(362), w: px(50), h: px(36), radius: px(14), text: '←', text_size: px(20),
+      x: px(142), y: px(362), w: px(50), h: px(34), radius: px(14), text: '←', text_size: px(20),
       color: th.text, press_color: th.border, normal_color: th.keyboardKey,
       click_func: function() { self._moveCursor(-1) }
     })
     createWidget(widget.BUTTON, {
-      x: px(196), y: px(362), w: px(50), h: px(36), radius: px(14), text: '→', text_size: px(20),
+      x: px(196), y: px(362), w: px(50), h: px(34), radius: px(14), text: '→', text_size: px(20),
       color: th.text, press_color: th.border, normal_color: th.keyboardKey,
       click_func: function() { self._moveCursor(1) }
     })
     createWidget(widget.BUTTON, {
-      x: px(262), y: px(362), w: px(116), h: px(36), radius: px(14),
+      x: px(262), y: px(362), w: px(116), h: px(34), radius: px(14),
       text: getText('search'), text_size: px(16), color: 0xffffff,
       press_color: th.success, normal_color: th.accent,
       click_func: function() { self._doSearch() }
@@ -224,7 +224,7 @@ Page({
       (function(nav, idx) {
         var isAccent = !!nav.random
         createWidget(widget.BUTTON, {
-          x: px(startX) + idx * px(bw + gap), y: px(396), w: px(bw), h: px(30), radius: px(15),
+          x: px(startX) + idx * px(bw + gap), y: px(400), w: px(bw), h: px(30), radius: px(15),
           text: nav.text, text_size: px(13), color: isAccent ? 0xffffff : th.textSecondary,
           press_color: isAccent ? th.success : th.border,
           normal_color: isAccent ? th.accent : th.bg,
