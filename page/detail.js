@@ -115,13 +115,13 @@ Page({
     if (this.state.defMax > 0) {
       // 释义滚动不能只依赖表冠：T-Rex 3 等无表冠设备使用两侧触控按钮。
       this.prevDefBtn = createWidget(widget.BUTTON, {
-        x: px(66), y: defY + px(94), w: px(44), h: px(32), radius: px(16),
+        x: px(64), y: defY + px(92), w: px(50), h: px(36), radius: px(18),
         text: getText('definitionPrev'), text_size: px(13), color: th.text,
         press_color: th.border, normal_color: th.keyboardKey,
         click_func: function() { self._changeDefinitionScroll(-1) }
       })
       this.nextDefBtn = createWidget(widget.BUTTON, {
-        x: px(370), y: defY + px(94), w: px(44), h: px(32), radius: px(16),
+        x: px(366), y: defY + px(92), w: px(50), h: px(36), radius: px(18),
         text: getText('definitionNext'), text_size: px(13), color: th.text,
         press_color: th.border, normal_color: th.keyboardKey,
         click_func: function() { self._changeDefinitionScroll(1) }
@@ -145,11 +145,11 @@ Page({
       })
     }
 
-    var btnY = px(374)
-    var btnH = px(32)
-    var btnW = px(104)
-    var btnGap = px(14)
-    var btnStartX = px(70)
+    var btnY = px(370)
+    var btnH = px(38)
+    var btnW = px(112)
+    var btnGap = px(12)
+    var btnStartX = px(60)
     this.favoriteBtn = createWidget(widget.BUTTON, {
       x: btnStartX, y: btnY, w: btnW, h: btnH, radius: px(16),
       text: storage.isFavorite(w) ? getText('favorited') : getText('favorite'), text_size: px(13),
@@ -181,8 +181,8 @@ Page({
       for (var i = 0; i < maxS; i++) {
         var sx = px(250) + i * px(72)
         createWidget(widget.BUTTON, {
-          x: sx, y: px(318), w: px(60), h: px(24), radius: px(12),
-          text: self.state.suggestions[i].word, text_size: px(12), color: 0xffffff,
+          x: sx, y: px(316), w: px(64), h: px(32), radius: px(16),
+          text: self.state.suggestions[i].word, text_size: px(13), color: 0xffffff,
           press_color: th.border, normal_color: th.accentSoft,
           click_func: (function(sugg) {
             return function() {

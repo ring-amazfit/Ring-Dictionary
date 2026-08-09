@@ -113,8 +113,8 @@ Page({
         text: ''
       })
       this.viewBtns[i] = createWidget(widget.BUTTON, {
-        x: px(300), y: y + px(3), w: px(74), h: px(30),
-        radius: px(15),
+        x: px(294), y: y + px(1), w: px(82), h: px(34),
+        radius: px(17),
         text: getText('viewDetail'),
         text_size: px(13),
         color: 0xffffff,
@@ -128,8 +128,8 @@ Page({
         })(i)
       })
       this.deleteBtns[i] = createWidget(widget.BUTTON, {
-        x: px(374), y: y + px(3), w: px(38), h: px(30),
-        radius: px(15),
+        x: px(376), y: y + px(1), w: px(42), h: px(34),
+        radius: px(17),
         text: getText('deleteShort'),
         text_size: px(13),
         color: 0xffffff,
@@ -144,12 +144,12 @@ Page({
       })
     }
 
-    var navY = px(390)
+    var navY = px(386)
     var navBW = px(68)
     var navGap = px(8)
     var navStartX = px(92)
     createWidget(widget.BUTTON, {
-      x: navStartX, y: navY, w: navBW, h: px(34),
+      x: navStartX, y: navY, w: navBW, h: px(38),
       radius: px(17),
       text: getText('previousPage'), text_size: px(14),
       color: th.text,
@@ -159,7 +159,7 @@ Page({
     })
 
     createWidget(widget.BUTTON, {
-      x: navStartX + (navBW + navGap), y: navY, w: navBW, h: px(34),
+      x: navStartX + (navBW + navGap), y: navY, w: navBW, h: px(38),
       radius: px(17),
       text: getText('back'), text_size: px(14),
       color: th.text,
@@ -169,7 +169,7 @@ Page({
     })
 
     createWidget(widget.BUTTON, {
-      x: navStartX + (navBW + navGap) * 2, y: navY, w: navBW, h: px(34),
+      x: navStartX + (navBW + navGap) * 2, y: navY, w: navBW, h: px(38),
       radius: px(17),
       text: getText('clearHistory'), text_size: px(14),
       color: 0xffffff,
@@ -179,7 +179,7 @@ Page({
     })
 
     createWidget(widget.BUTTON, {
-      x: navStartX + (navBW + navGap) * 3, y: navY, w: navBW, h: px(34),
+      x: navStartX + (navBW + navGap) * 3, y: navY, w: navBW, h: px(38),
       radius: px(17),
       text: getText('nextPage'), text_size: px(14),
       color: 0xffffff,

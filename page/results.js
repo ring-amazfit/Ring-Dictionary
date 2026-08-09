@@ -173,10 +173,10 @@ Page({
 
       // 打开按钮
       this.resultButtons[i] = createWidget(widget.BUTTON, {
-        x: px(282), y: y + px(10), w: px(120), h: px(28),
-        radius: px(14),
+        x: px(280), y: y + px(9), w: px(124), h: px(34),
+        radius: px(17),
         text: getText('openDetail'),
-        text_size: px(12),
+        text_size: px(13),
         color: 0xffffff,
         press_color: th.success,
         normal_color: th.accent,
@@ -185,25 +185,25 @@ Page({
     }
 
     this.expandBtn = createWidget(widget.BUTTON, {
-      x: px(160), y: px(330), w: px(160), h: px(28),
-      radius: px(14), text: getText('expandDefinition'), text_size: px(13),
+      x: px(152), y: px(328), w: px(176), h: px(34),
+      radius: px(17), text: getText('expandDefinition'), text_size: px(14),
       color: th.text, press_color: th.border, normal_color: th.keyboardKey,
       click_func: function() { self._startExpandDefinitions() }
     })
 
     // 初始结果已达上限时提示可继续加载（仅满 21 条时显示，点击更多后隐藏）。
     this.moreHint = createWidget(widget.TEXT, {
-      x: px(60), y: px(362), w: px(360), h: px(16), text_size: px(11),
+      x: px(60), y: px(366), w: px(360), h: px(16), text_size: px(11),
       color: th.textSecondary, align_h: align.CENTER_H, align_v: align.CENTER_V, text: ''
     })
 
 
-    var navY = px(384)
-    var navBW = px(68)
+    var navY = px(382)
+    var navBW = px(76)
     var navGap = px(8)
-    var navStartX = px(92)
+    var navStartX = px(76)
     createWidget(widget.BUTTON, {
-      x: navStartX, y: navY, w: navBW, h: px(34),
+      x: navStartX, y: navY, w: navBW, h: px(40),
       radius: px(17),
       text: getText('previousPage'), text_size: px(12),
       color: th.text,
@@ -213,7 +213,7 @@ Page({
     })
 
     createWidget(widget.BUTTON, {
-      x: navStartX + (navBW + navGap), y: navY, w: navBW, h: px(34),
+      x: navStartX + (navBW + navGap), y: navY, w: navBW, h: px(40),
       radius: px(17),
       text: getText('back'), text_size: px(14),
       color: th.text,
@@ -223,7 +223,7 @@ Page({
     })
 
     createWidget(widget.BUTTON, {
-      x: navStartX + (navBW + navGap) * 2, y: navY, w: navBW, h: px(34),
+      x: navStartX + (navBW + navGap) * 2, y: navY, w: navBW, h: px(40),
       radius: px(17),
       text: getText('home'), text_size: px(13),
       color: th.text,
@@ -236,7 +236,7 @@ Page({
 
     // 结果页底部仅保留导航按钮，展开释义放在“更多”按钮内轮换触发
     this.moreBtn = createWidget(widget.BUTTON, {
-      x: navStartX + (navBW + navGap) * 3, y: navY, w: navBW, h: px(34),
+      x: navStartX + (navBW + navGap) * 3, y: navY, w: navBW, h: px(40),
       radius: px(17),
       text: getText('more'), text_size: px(12),
       color: 0xffffff,

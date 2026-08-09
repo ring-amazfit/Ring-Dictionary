@@ -26,7 +26,7 @@ var CN_MAX_RESULTS = 20
 // never exceed this many entry reads regardless of the query.
 var CN_SCAN_CAP = 150
 var MAX_CACHE_SIZE = 64                    // bounded result caches — avoid retaining large Chinese definitions
-var MAX_SCAN_CHARS = 260000   // enough to cover the largest single-letter section
+var MAX_SCAN_CHARS = 160000   // 非字母目标（含空格/标点）的扫描上限：实测最大真实词距前缀 127956 字符，160K 留足余量；纯字母目标靠 isPast 提前 break，不依赖此上限
 
 var EN_CACHE = {}
 var CN_CACHE = {}
@@ -82,20 +82,18 @@ function charEq(buf, idx, code) {
 }
 
 // 纯字母目标（不含空格/标点）。词典文件对纯字母词按字母序排列，但对含空格
-// 的词条排序并不遵循 ASCII（空格排在字母之后），因此 isPast 只对纯字母目标
-// 可靠；含空格/标点的目标禁用 isPast 提前退出，改由安全上限终止扫描。
+// 的词条排序并不一致（actable < act as 但 adown < ado，with much），因此
+// isPast 只对纯字母目标可靠；含空格/标点目标禁用 isPast，改由扫描上限终止。
 function isLetterTarget(target) {
   return /^[a-z]+$/.test(target || '')
 }
 
 // True when the word in `buf` (first `wLen` chars) is alphabetically past
 // `target` and therefore no more prefix matches are possible. Compares only
-// the first `tLen` chars so single-character queries (tLen=1) work correctly
-// — the previous c1-based check broke immediately for any 1-char query.
+// the first `tLen` chars so single-character queries (tLen=1) work correctly.
 // NOTE: the `| 32` lowercase trick only applies to A-Z; applying it to
 // non-letters (space, backslash, Chinese) corrupts the value and can make a
-// normal word look "past" the target, aborting the scan early (e.g. the
-// dict entry `al\nadj` whose backslash became `|` > 'o').
+// normal word look "past" the target, aborting the scan early.
 function isPast(buf, wLen, target, tLen) {
   if (wLen < tLen) return false
   for (var k = 0; k < tLen; k++) {
@@ -311,6 +309,9 @@ DictEngine.prototype.lookup = function(word) {
 
   var target = normalizeWord(word)
   if (target.length === 0) return null
+  // 词典词头都是英文；中文目标（如历史里存的未找到中文词）直接短路，
+  // 避免从文件头无界扫描造成真机卡死重启。
+  if (containsChinese(target)) return null
 
   var cached = this._getCache(this._lookupCache, target, this._lookupCacheOrder)
   if (cached) return cached
@@ -353,10 +354,9 @@ DictEngine.prototype.lookup = function(word) {
       if (inWord) {
         inWord = false
       } else {
-        // 只有已经找到前缀候选时才能用字典排序提前结束。
-        // 没有候选时要保留有限扫描窗口给英文模糊匹配（如 nien → nine）。
-        // 含空格/标点的目标禁用 isPast（词典排序不遵循 ASCII），靠上限终止。
-        if (isLetterTarget(target) && isPast(wBuf, wLen, target, tLen) && (matches.length > 0 || target.length < 3)) break
+        // isPast 只对纯字母目标可靠（文件对含空格/标点词条排序不一致），
+        // 未找到的纯字母目标在此快速 break；模糊候选都在 isPast 点之前已收集。
+        if (isLetterTarget(target) && isPast(wBuf, wLen, target, tLen)) break
 
         if (wLen === tLen) {
           var exact = true
@@ -867,6 +867,8 @@ DictEngine.prototype.search = function(query) {
 DictEngine.prototype.lookupDefinition = function(word) {
   var target = normalizeWord(word)
   if (!target) return null
+  // 词典词头都是英文；中文目标直接返回 null（详情页未找到中文词不再扫描词库）。
+  if (containsChinese(target)) return null
   this._loadSupp()
   var direct = this._suppWordMap && this._suppWordMap[target]
   if (direct) return { word: direct.w, definition: direct.d }

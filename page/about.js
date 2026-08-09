@@ -141,11 +141,11 @@ Page({
 
     // ======== 底部返回按钮 ========
     createWidget(widget.BUTTON, {
-      x: px(170), y: px(398),
-      w: px(140), h: px(40),
-      radius: px(20),
+      x: px(160), y: px(396),
+      w: px(160), h: px(44),
+      radius: px(22),
       text: getText('return'),
-      text_size: px(18),
+      text_size: px(19),
       color: th.text,
       press_color: th.border,
       normal_color: th.keyboardKey,

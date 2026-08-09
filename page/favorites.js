@@ -122,8 +122,8 @@ Page({
 
       // 查看按钮
       this.viewBtns[i] = createWidget(widget.BUTTON, {
-        x: px(272), y: y + px(6), w: px(72), h: px(28),
-        radius: px(14),
+        x: px(268), y: y + px(6), w: px(82), h: px(36),
+        radius: px(18),
         text: getText('view'),
         text_size: px(13),
         color: 0xffffff,
@@ -139,8 +139,8 @@ Page({
 
       // 删除按钮
       this.delBtns[i] = createWidget(widget.BUTTON, {
-        x: px(344), y: y + px(6), w: px(68), h: px(28),
-        radius: px(14),
+        x: px(350), y: y + px(6), w: px(68), h: px(36),
+        radius: px(18),
         text: getText('delete'),
         text_size: px(13),
         color: 0xffffff,
@@ -156,12 +156,12 @@ Page({
     }
 
     // 底部导航（收进圆屏安全区）
-    var navY = px(390)
+    var navY = px(386)
     var navBW = px(68)
     var navGap = px(8)
     var navStartX = px(92)
     createWidget(widget.BUTTON, {
-      x: navStartX, y: navY, w: navBW, h: px(34),
+      x: navStartX, y: navY, w: navBW, h: px(38),
       radius: px(17),
       text: getText('previousPage'), text_size: px(14),
       color: th.text,
@@ -171,7 +171,7 @@ Page({
     })
 
     createWidget(widget.BUTTON, {
-      x: navStartX + (navBW + navGap), y: navY, w: navBW, h: px(34),
+      x: navStartX + (navBW + navGap), y: navY, w: navBW, h: px(38),
       radius: px(17),
       text: getText('back'), text_size: px(14),
       color: th.text,
@@ -181,7 +181,7 @@ Page({
     })
 
     createWidget(widget.BUTTON, {
-      x: navStartX + (navBW + navGap) * 2, y: navY, w: navBW, h: px(34),
+      x: navStartX + (navBW + navGap) * 2, y: navY, w: navBW, h: px(38),
       radius: px(17),
       text: getText('top'), text_size: px(14),
       color: th.text,
@@ -191,7 +191,7 @@ Page({
     })
 
     createWidget(widget.BUTTON, {
-      x: navStartX + (navBW + navGap) * 3, y: navY, w: navBW, h: px(34),
+      x: navStartX + (navBW + navGap) * 3, y: navY, w: navBW, h: px(38),
       radius: px(17),
       text: getText('nextPage'), text_size: px(14),
       color: 0xffffff,

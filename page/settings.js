@@ -76,9 +76,9 @@ Page({
 
     // 返回按钮
     createWidget(widget.BUTTON, {
-      x: px(180), y: px(420),
-      w: px(120), h: px(36),
-      radius: px(18),
+      x: px(170), y: px(418),
+      w: px(140), h: px(40),
+      radius: px(20),
       text: getText('back'),
       text_size: px(17),
       color: th.text,
@@ -109,8 +109,8 @@ Page({
 
     // 值按钮
     createWidget(widget.BUTTON, {
-      x: px(264), y: y + px(11), w: px(140), h: px(30),
-      radius: px(15),
+      x: px(262), y: y + px(8), w: px(144), h: px(36),
+      radius: px(18),
       text: value,
       text_size: px(15),
       color: 0xffffff,

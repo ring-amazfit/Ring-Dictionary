@@ -72,8 +72,8 @@ Page({
       text: chMode ? getText('modeChinese') : getText('modeEnglish')
     })
     this.modeBtn = createWidget(widget.BUTTON, {
-      x: px(300), y: px(30), w: px(56), h: px(24), radius: px(12),
-      text: chMode ? getText('switchToEnglish') : getText('switchToChinese'), text_size: px(11),
+      x: px(296), y: px(27), w: px(64), h: px(34), radius: px(17),
+      text: chMode ? getText('switchToEnglish') : getText('switchToChinese'), text_size: px(12),
       color: th.accent, press_color: th.border, normal_color: th.accentSoft,
       click_func: function() { self._toggleMode() }
     })
@@ -90,14 +90,14 @@ Page({
       text: this._displayQuery() || (chMode ? getText('inputChinese') : getText('inputWord'))
     })
     createWidget(widget.BUTTON, {
-      x: px(280), y: px(73), w: px(36), h: px(26), radius: px(13),
-      text: getText('clear'), text_size: px(13), color: th.textSecondary,
+      x: px(276), y: px(70), w: px(40), h: px(34), radius: px(17),
+      text: getText('clear'), text_size: px(15), color: th.textSecondary,
       press_color: th.border, normal_color: th.panel,
       click_func: function() { self._clearInput() }
     })
     createWidget(widget.BUTTON, {
-      x: px(324), y: px(70), w: px(52), h: px(32), radius: px(16),
-      text: getText('searchShort'), text_size: px(16), color: 0xffffff,
+      x: px(320), y: px(68), w: px(58), h: px(36), radius: px(18),
+      text: getText('searchShort'), text_size: px(18), color: 0xffffff,
       press_color: th.success, normal_color: th.accent,
       click_func: function() { self._doSearch() }
     })
@@ -109,25 +109,25 @@ Page({
     this.candidateTexts = []
     this.candidateBtns = []
     for (var i = 0; i < SCREEN.CANDIDATES_PER_PAGE; i++) {
-      var bx = px(68) + i * px(120)
+      var bx = px(65) + i * px(120)
       this.candidateTexts[i] = createWidget(widget.TEXT, {
-        x: bx + px(20), y: px(132), w: px(80), h: px(38), text_size: px(30),
+        x: bx + px(20), y: px(128), w: px(80), h: px(40), text_size: px(32),
         color: th.text, align_h: align.CENTER_H, align_v: align.CENTER_V, text: ''
       })
       this.candidateBtns[i] = createWidget(widget.BUTTON, {
-        x: bx, y: px(174), w: px(104), h: px(28), radius: px(14),
-        text: (i + 1) + '', text_size: px(13), color: th.text,
+        x: bx, y: px(170), w: px(112), h: px(34), radius: px(17),
+        text: (i + 1) + '', text_size: px(15), color: th.text,
         press_color: th.border, normal_color: th.keyboardKey,
         click_func: (function(idx) { return function() { self._selectCandidate(idx) } })(i)
       })
     }
     this.prevCandBtn = createWidget(widget.BUTTON, {
-      x: px(10), y: px(178), w: px(48), h: px(24), radius: px(12), text: ' ', text_size: px(14),
+      x: px(8), y: px(170), w: px(52), h: px(36), radius: px(18), text: ' ', text_size: px(16),
       color: th.text, press_color: th.border, normal_color: th.keyboardKey,
       click_func: function() { self._changeCandidatePage(-1) }
     })
     this.nextCandBtn = createWidget(widget.BUTTON, {
-      x: px(422), y: px(178), w: px(48), h: px(24), radius: px(12), text: ' ', text_size: px(14),
+      x: px(420), y: px(170), w: px(52), h: px(36), radius: px(18), text: ' ', text_size: px(16),
       color: th.text, press_color: th.border, normal_color: th.keyboardKey,
       click_func: function() { self._changeCandidatePage(1) }
     })
@@ -136,18 +136,18 @@ Page({
       color: th.textSecondary, align_h: align.CENTER_H, align_v: align.CENTER_V, text: ''
     })
     this.suggestText = createWidget(widget.TEXT, {
-      x: px(60), y: px(204), w: px(360), h: px(20), text_size: px(13),
+      x: px(60), y: px(206), w: px(360), h: px(20), text_size: px(13),
       color: th.textSecondary, align_h: align.LEFT, align_v: align.CENTER_V,
       text_style: text_style.TRUNCATE, text: ''
     })
     this.loadingText = createWidget(widget.TEXT, {
-      x: px(60), y: px(222), w: px(360), h: px(14), text_size: px(11),
+      x: px(60), y: px(224), w: px(360), h: px(14), text_size: px(11),
       color: th.textSecondary, align_h: align.CENTER_H, align_v: align.CENTER_V,
       text: getText('waitingSearch')
     })
     if (this.state.debugInfo) {
       this.debugText = createWidget(widget.TEXT, {
-        x: px(60), y: px(238), w: px(360), h: px(14), text_size: px(10), color: th.textSecondary,
+        x: px(60), y: px(240), w: px(360), h: px(14), text_size: px(10), color: th.textSecondary,
         align_h: align.CENTER_H, align_v: align.CENTER_V, text: ''
       })
     }
@@ -169,7 +169,7 @@ Page({
   _renderQwerty(th) {
     var self = this
     var keys = [['q','w','e','r','t','y','u','i','o','p'], ['a','s','d','f','g','h','j','k','l'], ['z','x','c','v','b','n','m']]
-    var keyW = px(32), keyH = px(32), gap = px(5), startY = px(250), rowGap = px(37)
+    var keyW = px(36), keyH = px(36), gap = px(4), startY = px(246), rowGap = px(38)
     for (var ri = 0; ri < keys.length; ri++) {
       var row = keys[ri]
       var rowY = startY + ri * rowGap
@@ -178,32 +178,32 @@ Page({
       for (var ci = 0; ci < row.length; ci++) {
         var k = row[ci]
         createWidget(widget.BUTTON, {
-          x: startX + ci * (keyW + gap), y: rowY, w: keyW, h: keyH, radius: px(10),
-          text: k.toUpperCase(), text_size: px(17), color: th.text,
+          x: startX + ci * (keyW + gap), y: rowY, w: keyW, h: keyH, radius: px(11),
+          text: k.toUpperCase(), text_size: px(19), color: th.text,
           press_color: th.accent, normal_color: th.keyboardKey,
           click_func: (function(key) { return function() { self._onKey(key) } })(k)
         })
       }
     }
     createWidget(widget.BUTTON, {
-      x: px(56), y: px(362), w: px(74), h: px(32), radius: px(12),
-      text: getText('backspace'), text_size: px(18), color: th.text,
+      x: px(52), y: px(362), w: px(84), h: px(36), radius: px(14),
+      text: getText('backspace'), text_size: px(20), color: th.text,
       press_color: th.border, normal_color: th.keyboardKey,
       click_func: function() { self._onBackspace() }
     })
     createWidget(widget.BUTTON, {
-      x: px(138), y: px(362), w: px(42), h: px(32), radius: px(12), text: '←', text_size: px(18),
+      x: px(142), y: px(362), w: px(50), h: px(36), radius: px(14), text: '←', text_size: px(20),
       color: th.text, press_color: th.border, normal_color: th.keyboardKey,
       click_func: function() { self._moveCursor(-1) }
     })
     createWidget(widget.BUTTON, {
-      x: px(188), y: px(362), w: px(42), h: px(32), radius: px(12), text: '→', text_size: px(18),
+      x: px(196), y: px(362), w: px(50), h: px(36), radius: px(14), text: '→', text_size: px(20),
       color: th.text, press_color: th.border, normal_color: th.keyboardKey,
       click_func: function() { self._moveCursor(1) }
     })
     createWidget(widget.BUTTON, {
-      x: px(258), y: px(362), w: px(104), h: px(32), radius: px(12),
-      text: getText('search'), text_size: px(14), color: 0xffffff,
+      x: px(262), y: px(362), w: px(116), h: px(36), radius: px(14),
+      text: getText('search'), text_size: px(16), color: 0xffffff,
       press_color: th.success, normal_color: th.accent,
       click_func: function() { self._doSearch() }
     })
@@ -224,8 +224,8 @@ Page({
       (function(nav, idx) {
         var isAccent = !!nav.random
         createWidget(widget.BUTTON, {
-          x: px(startX) + idx * px(bw + gap), y: px(400), w: px(bw), h: px(22), radius: px(11),
-          text: nav.text, text_size: px(12), color: isAccent ? 0xffffff : th.textSecondary,
+          x: px(startX) + idx * px(bw + gap), y: px(396), w: px(bw), h: px(30), radius: px(15),
+          text: nav.text, text_size: px(13), color: isAccent ? 0xffffff : th.textSecondary,
           press_color: isAccent ? th.success : th.border,
           normal_color: isAccent ? th.accent : th.bg,
           click_func: nav.random ? function() { self._doRandom() } : function() { push({ url: nav.url, anim: true }) }
